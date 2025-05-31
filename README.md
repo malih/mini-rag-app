@@ -2,6 +2,12 @@
 
 This is an implemtation of RAG APP allowing me to learn LLM's manipulation
 
+### required files for code tructure
+1) gitignore ==> file where we will have files that git will ignore during the commit
+2) README ==> required in order to explain the main goal of this code and give information about it the user
+3)requirment
+
+
 #### Install Python using MiniConda
 
 1) Download and install MiniConda from here
