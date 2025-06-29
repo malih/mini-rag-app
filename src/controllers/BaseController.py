@@ -14,6 +14,6 @@ class BaseController:
         """
         Generates a random string of fixed length.
         """
-        letters = string.ascii_lowercas + string.digits
-        return ''.join(random.choice(letters) ,k=length)   
+        letters = string.ascii_lowercase + string.digits
+        return ''.join(random.choice(letters) for _ in range(length))   
    

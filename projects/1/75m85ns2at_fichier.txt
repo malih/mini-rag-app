@@ -1,0 +1,38 @@
+ccc",
+    "name": "paymentScheduleApproved",
+    "timestamp": "2025-04-28T07:43:21.019967882Z",
+    "type": "INITIAL",
+    "source": {
+      "app": "CBM",
+      "component": "CBM-MOM-PAYMENTSCHEDULE-INI",
+      "domain": "CBM"
+    },
+    "identity": {
+      "identifier": "PRD-CBM-KSPEVT-PaymentSchedule-CLID-1"
+    }
+  }
+}   {
+          "idRef": "invoice-F2410/3347201@24",
+          "type": "dependOn"
+        },
+        {
+          "idRef": "invoice-F2504/3121744@24",
+          "type": "dependOn"
+        },
+        {
+          "idRef": "invoice-F2409/3300965@24",
+          "type": "dependOn"
+        },
+        {
+          "idRef": "invoice-F2502/3050055@24",
+          "type": "dependOn"
+        }
+      ],
+      "type": "PaymentSchedule",
+      "idRef": "paymentSchedule-CTR0229531/00@24"
+    }
+  },
+  "metadata": {
+    "uuid": "c0f75550-8076-44ec-bb49-630f2e9e4fa9",
+    "correlationId": "d8aee4f8-b2e5-49b6-a063-0f8e0914f9d3",
+    "parentId": "c74756e4-d77b-4130-971b-92118d7df
