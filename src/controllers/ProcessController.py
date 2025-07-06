@@ -54,7 +54,6 @@ class ProcessController(BaseController):
         """
         Processes the file content by splitting it into chunks.
         """
-        #print(f"Processing file content : {file_content}")
         text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=overlap_size,
