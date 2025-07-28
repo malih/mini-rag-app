@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Depends,FastAPI,UploadFile
+from fastapi import APIRouter, Depends,FastAPI,UploadFile,Request
 import os
-from fastapi.responses import JSONResponse 
+from fastapi.responses import JSONResponse , FileResponse
 from controllers import DataController, ProjectController,ProcessController
 from helpers.config import get_settings, Settings
 import logging
 import aiofile
 from aiofile import AIOFile
 from .schemes.data import ProcessRequest
+from models.ProjectModel import ProjectModel
 
 
 logger= logging.getLogger('unicorn.error')
@@ -17,7 +18,10 @@ data_router = APIRouter(
 )
 
 @data_router.post("/upload/{project_id}")
-async def upload_data(project_id: str, file: UploadFile, app_settings: Settings = Depends(get_settings)):
+async def upload_data(request:Request,project_id: str, file: UploadFile, app_settings: Settings = Depends(get_settings)):
+
+    project_model = ProjectModel(db_client=request.app.db_client)
+    project = await project_model.get_project_or_create_one(project_id=project_id)
     
 
     data_controller = DataController()
@@ -52,7 +56,7 @@ async def upload_data(project_id: str, file: UploadFile, app_settings: Settings 
     except Exception as e:
 
         logger.error(f"Failed to upload file: {str(e)}")
-
+        print(str(e))  # Affiche l'erreur dans le terminal
         return JSONResponse(
             status_code=500,
             content={
@@ -60,6 +64,15 @@ async def upload_data(project_id: str, file: UploadFile, app_settings: Settings 
                 "message": f"Failed to upload file: {str(e)}"
             }
         )
+    
+    return JSONResponse(
+        content={
+            "signnal":ResponseSignal.FILE_UPLOADED_SUCCESS.value,
+            "file_id": file_id,
+            "project_id": str(project_id)
+        }
+    )
+    
  
 
 @data_router.post("/process/{project_id}")
