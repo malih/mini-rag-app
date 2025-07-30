@@ -2,7 +2,7 @@ from pydantic import BaseModel, Field
 from typing import Optional, List
 
 class DataChunk(BaseModel):
-    id: Optional[str] 
+    id: Optional[str] = Field(None, alias="_id") 
     chunk_text: str = Field(..., min_length=1)
     chunk_metadata: dict
     chunk_order: int= Field(..., ge=0)

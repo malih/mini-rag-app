@@ -36,7 +36,7 @@ class ProcessController(BaseController):
         if file_extension == ProcessingEnum.TXT.value:
             return TextLoader(file_path)
         elif file_extension == ProcessingEnum.PDF.value:
-            return PyMupdfLoader(file_path)
+            return PyMuPDFLoader(file_path)
         elif file_extension == ProcessingEnum.DOCX.value:
             return TextLoader(file_path)
         else:
