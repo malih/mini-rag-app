@@ -9,7 +9,10 @@ from aiofile import AIOFile
 from .schemes.data import ProcessRequest
 from models.ProjectModel import ProjectModel
 from models.ChunkModel import ChunkModel
-from models.db_schemes.data_chunk import DataChunk
+from models.db_schemes import DataChunk, Asset
+from models.AssetModel import AssetModel
+from models.enums.AssetTypeEnum import AssetTypeEnum
+from models.enums.ResponseEnum   import ResponseSignal
 
 
 logger= logging.getLogger('unicorn.error')
@@ -45,16 +48,7 @@ async def upload_data(request:Request,project_id: str, file: UploadFile, app_set
         async with AIOFile(file_path, 'wb') as out_file:
             while chunk :=await file.read(app_settings.FILE_DEFAULT_CHUNK_SIZE):
                 await out_file.write(chunk)
-        return JSONResponse(
-            status_code=200,
-            content={
-                "status": "success",
-                "message": "File uploaded successfully.",
-                "file_name": file.filename,
-                "file_path": file_path,
-                "file_id": file_id
-            }
-        )
+    
     except Exception as e:
 
         logger.error(f"Failed to upload file: {str(e)}")
@@ -67,10 +61,24 @@ async def upload_data(request:Request,project_id: str, file: UploadFile, app_set
             }
         )
     
+    #store the asset in the database
+    asset_model = await AssetModel.create_instance(db_client=request.app.db_client)
+
+    #create the asset record
+    asset_resource = Asset(
+        asset_project_id=project.id,
+        asset_type=AssetTypeEnum.FILE.value,
+        asset_name=file_id,
+        asset_size=os.path.getsize(file_path)
+    )
+
+    asset_record = await asset_model.create_asset(asset=asset_resource)
+        
+
     return JSONResponse(
         content={
-            "signnal":ResponseSignal.FILE_UPLOADED_SUCCESS.value,
-            "file_id": file_id,
+            "signnal":ResponseSignal.SUCCESS.value,
+            "file_id": str(asset_record.id),
         }
     )
     
