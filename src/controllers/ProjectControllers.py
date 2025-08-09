@@ -17,4 +17,5 @@ class ProjectController(BaseController):
 
         if not os.path.exists(project_dir):
             os.makedirs(project_dir)
-        return f"{self.app_settings.PROJECTS_DIR}/{project_id}"
+
+        return project_dir

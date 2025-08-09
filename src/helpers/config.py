@@ -11,7 +11,6 @@ class Settings(BaseSettings):
     FILE_ALLOWED_TYPES: List[str] = []
     FILE_MAX_SIZE: int = 0
     FILE_DEFAULT_CHUNK_SIZE: int = 0
-    PROJECTS_DIR: str
 
     MONGODB_URL: str
     MONGODB_DATABASE: str

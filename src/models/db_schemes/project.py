@@ -13,3 +13,16 @@ class Project(BaseModel):
         if not value.isalnum():
             raise ValueError('Invalid project_id format')
         return value
+    
+    class config:
+        arbitrary_types_allowed = True
+
+    @classmethod
+    def get_indexes(cls):
+        return [
+            {
+                "key": [("Project_id", 1)],
+                "unique": True,
+                "name": "project_id_index"
+            }
+        ]
