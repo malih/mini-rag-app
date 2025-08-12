@@ -11,3 +11,5 @@ class ResponseSignal(Enum):
     CREATED = "created"
     ACCEPTED = "accepted"
     NO_CONTENT = "no_content"
+    NO_FILE_ERROR = "not_found_files"
+    FILE_ID_ERROR = "no_file_found_with_this_id"
