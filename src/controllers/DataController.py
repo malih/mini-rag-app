@@ -39,12 +39,15 @@ class DataController(BaseController):
         project_path = project_controller.get_project_path(project_id=project_id)
 
         cleaned_file_name = self.get_cleaned_file_name(orig_file_name)
-
-        new_file_path = os.path.join(project_path, f"{cleaned_file_name}_{random_key}")
+        name, ext = os.path.splitext(cleaned_file_name)
+        # Ajoute le random_key avant l'extension
+        unique_file_name = f"{random_key}_{name}{ext}"
+        new_file_path = os.path.join(project_path, unique_file_name)
 
         while os.path.exists(new_file_path):
             random_key = self.generate_random_string(10)
-            new_file_path = os.path.join(project_path, f"{cleaned_file_name}_{random_key}")
+            unique_file_name = f"{random_key}_{name}{ext}"  # <-- garde l'extension !
+            new_file_path = os.path.join(project_path, unique_file_name)
 
         return new_file_path,random_key+"_"+cleaned_file_name
 
